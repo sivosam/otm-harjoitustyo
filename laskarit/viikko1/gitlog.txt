@@ -1,0 +1,113 @@
+commit 7a1556d5992bc40e36475960ef0dabdae59f3f14
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:36:12 2018 +0200
+
+    file1 poistettu, file2 nimi vaihdettu
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 5300e38746f1f702a15a8a8df586117d04bfec9a
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:34:14 2018 +0200
+
+    tiedostoja lisätty
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 08ea23755e86f468a6cea3c8a306267b81459fa9
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:29:33 2018 +0200
+
+    eka kolmas muokattu
+
+ eka.txt    | 10 ++++++++--
+ kolmas.txt |  9 ++++++++-
+ 2 files changed, 16 insertions(+), 3 deletions(-)
+
+commit 23e2ec06f7b603bbd790b7052431802a69eb2925
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:27:51 2018 +0200
+
+    nimetty uudelleen
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 3a3925cee0cbaf2de8c0ec75249a67848a4776b0
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:27:07 2018 +0200
+
+    toinen poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit ac7db98e80107755103d16b6bb4717adc17bff41
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:25:26 2018 +0200
+
+    tekstiä poistettu ja lisätty
+
+ tiedosto.txt | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+
+commit d8a639b1b971b92b6099f4f9be07772db2f06f3e
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:24:37 2018 +0200
+
+    tekstiä lisätty
+
+ tiedosto.txt | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
+
+commit 1b18d11ef5da26d3c608915e2c6473d10be4c4d5
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:17:22 2018 +0200
+
+    stuff luotu
+
+ stuff/testi.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 61f75476f1aa986d3e0f4182dfa788547d752fbe
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:16:54 2018 +0200
+
+    toka kolmas muokattu
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit d689674932bb5ba7f403333df63c5b9b04fc2aa6
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:16:07 2018 +0200
+
+    kolmas luotu
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit c26d92c03c5a06aeae0d5f904be2f01ae81410a2
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:13:55 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit b8a549387c6d14cf49c33d7dea2663402af183d2
+Author: Sampo Sivonen <sampo.sivonen@helsinki.fi>
+Date:   Thu Mar 15 17:11:29 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
