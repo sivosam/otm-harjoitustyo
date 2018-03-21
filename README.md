@@ -12,6 +12,6 @@ Tämä on *kurssin* **Ohjelmistotekniikan menetelmät** harjoitustyö.
 
 ### Viikko 2
 
-[Unicafe] (https://github.com/sivosam/otm-harjoitustyo/tree/master/laskarit/viikko2/Unicafe)
+[Unicafe](https://github.com/sivosam/otm-harjoitustyo/tree/master/laskarit/viikko2/Unicafe)
 
 [Määrittelydokumentti] -
