@@ -2,6 +2,12 @@
 
 Tämä on *kurssin* **Ohjelmistotekniikan menetelmät** harjoitustyö.
 
+## Dokumentaatio
+
+[Vaatimusmäärittely](https://github.com/sivosam/otm-harjoitustyo/blob/master/Lukulista/dokumentaatio/vaatimusmaarittely.md)
+
+[Tuntikirjanpito](https://github.com/sivosam/otm-harjoitustyo/blob/master/Lukulista/dokumentaatio/tuntikirjanpito.md)
+
 ## Tehtävät
 
 ### Viikko 1
@@ -14,4 +20,5 @@ Tämä on *kurssin* **Ohjelmistotekniikan menetelmät** harjoitustyö.
 
 [Unicafe](https://github.com/sivosam/otm-harjoitustyo/tree/master/laskarit/viikko2/Unicafe)
 
-[Määrittelydokumentti] -
+[Määrittelydokumentti](https://github.com/sivosam/otm-harjoitustyo/blob/master/Lukulista/dokumentaatio/vaatimusmaarittely.md)
+
