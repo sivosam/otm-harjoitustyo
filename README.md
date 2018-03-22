@@ -20,5 +20,5 @@ Tämä on *kurssin* **Ohjelmistotekniikan menetelmät** harjoitustyö.
 
 [Unicafe](https://github.com/sivosam/otm-harjoitustyo/tree/master/laskarit/viikko2/Unicafe)
 
-[Määrittelydokumentti](https://github.com/sivosam/otm-harjoitustyo/blob/master/Lukulista/dokumentaatio/vaatimusmaarittely.md)
+[Vaatimusmäärittely](https://github.com/sivosam/otm-harjoitustyo/blob/master/Lukulista/dokumentaatio/vaatimusmaarittely.md)
 
