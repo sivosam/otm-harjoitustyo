@@ -26,7 +26,6 @@ Sovelluksen perusnäkymästä löytyy toiminnallisuus uuden tekstin lisäämisee
  – Lukemiseen käytetyn ajan seuranta
 
  – Tilastoja 
-    
-    – Esim. luettujen sivujen keskiarvo per päivä jne.
+  – Esim. luettujen sivujen keskiarvo per päivä jne.
 
  – Tekstien lajittelu esim. kurssin perusteella
