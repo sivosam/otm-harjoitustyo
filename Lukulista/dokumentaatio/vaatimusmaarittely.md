@@ -9,7 +9,7 @@ Sovelluksessa ei ole tarvetta useammalle käyttäjälle.
 
 <img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/Lukulista/dokumentaatio/kuvat/v1.png" width="750">
 
-Sovelluksen perusnäkymästä löytyy toiminnallisuus uuden tekstin lisäämiseen ja lista luettavan olevista teksteistä, niiden sivumääristä ja määräajoista. 
+Sovelluksen perusnäkymästä löytyy toiminnallisuus uuden tekstin lisäämiseen ja lista luettavana olevista teksteistä, niiden sivumääristä ja määräajoista. 
 
 ## Tarjottu toiminnallisuus
 
