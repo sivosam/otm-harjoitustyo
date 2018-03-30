@@ -22,3 +22,11 @@ Tämä on *kurssin* **Ohjelmistotekniikan menetelmät** harjoitustyö.
 
 [Vaatimusmäärittely](https://github.com/sivosam/otm-harjoitustyo/blob/master/Lukulista/dokumentaatio/vaatimusmaarittely.md)
 
+
+### Viikko 3
+
+[Luokkakaavio](https://github.com/sivosam/otm-harjoitustyo/blob/master/laskarit/viikko3/Luokkakaavio.jpg)
+
+[Machine sekvenssikaavio](https://github.com/sivosam/otm-harjoitustyo/blob/master/laskarit/viikko3/Machine%20sekvenssikaavio.png)
+
+[HSL Sekvenssikaavio](https://github.com/sivosam/otm-harjoitustyo/blob/master/laskarit/viikko3/HSL%20sekvenssikaavio.png)
