@@ -25,7 +25,9 @@ Tämä on *kurssin* **Ohjelmistotekniikan menetelmät** harjoitustyö.
 
 ### Viikko 3
 
-[Luokkakaavio](https://github.com/sivosam/otm-harjoitustyo/blob/master/laskarit/viikko3/Luokkakaavio.jpg)
+[Luokkakaavio 1](https://github.com/sivosam/otm-harjoitustyo/blob/master/laskarit/viikko3/Luokkakaavio%201.jpg)
+
+[Luokkakaavio 2](https://github.com/sivosam/otm-harjoitustyo/blob/master/laskarit/viikko3/Luokkakaavio%202.jpg)
 
 [Machine sekvenssikaavio](https://github.com/sivosam/otm-harjoitustyo/blob/master/laskarit/viikko3/Machine%20sekvenssikaavio.png)
 
