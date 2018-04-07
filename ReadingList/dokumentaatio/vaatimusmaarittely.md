@@ -7,7 +7,7 @@ Sovelluksessa ei ole tarvetta useammalle käyttäjälle.
 
 ## Käyttöliittymäluonnos
 
-<img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/Readinglist/dokumentaatio/kuvat/v1.png" width="750">
+<img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/v1.png" width="750">
 
 Sovelluksen perusnäkymästä löytyy toiminnallisuus uuden tekstin lisäämiseen ja lista luettavana olevista teksteistä, niiden sivumääristä ja määräajoista. 
 
