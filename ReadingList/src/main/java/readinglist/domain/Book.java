@@ -4,18 +4,14 @@ public class Book {
 
     private Integer id;
     private String name;
-    private Integer startPage;
-    private Integer endPage;
+    private String pages;
     private String deadline;
-    private Integer currentPage;
 
-    public Book(Integer id, String name, Integer startPage, Integer endPage, String deadline, Integer currentPage) {
+    public Book(Integer id, String name, String pages, String deadline) {
         this.id = id;
         this.name = name;
-        this.startPage = startPage;
-        this.endPage = endPage;
+        this.pages = pages;
         this.deadline = deadline;
-        this.currentPage = currentPage;
     }
 
     public Integer getId() {
@@ -30,22 +26,6 @@ public class Book {
         this.name = name;
     }
 
-    public Integer getStartPage() {
-        return startPage;
-    }
-
-    public void setStartPage(Integer startPage) {
-        this.startPage = startPage;
-    }
-
-    public Integer getEndPage() {
-        return endPage;
-    }
-
-    public void setEndPage(Integer endPage) {
-        this.endPage = endPage;
-    }
-
     public String getDeadline() {
         return deadline;
     }
@@ -53,18 +33,18 @@ public class Book {
     public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
-
-    public Integer getCurrentPage() {
-        return currentPage;
-    }
-
-    public void setCurrentPage(Integer currentPage) {
-        this.currentPage = currentPage;
-    }
     
     @Override
     public String toString() {
         return this.name;
+    }
+
+    public String getPages() {
+        return pages;
+    }
+
+    public void setPages(String pages) {
+        this.pages = pages;
     }
     
 }

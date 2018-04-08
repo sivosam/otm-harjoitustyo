@@ -28,12 +28,10 @@ public class ReadingListDao implements Dao<Book, Integer> {
 
         Integer id = rs.getInt("id");
         String name = rs.getString("name");
-        Integer startPage = rs.getInt("startPage");
-        Integer endPage = rs.getInt("endPage");
+        String pages = rs.getString("pages");
         String deadline = rs.getString("deadline");
-        Integer currentPage = rs.getInt("currentPage");
 
-        Book b = new Book(id, name, startPage, endPage, deadline, currentPage);
+        Book b = new Book(id, name, pages, deadline);
 
         rs.close();
         stmt.close();
@@ -52,11 +50,10 @@ public class ReadingListDao implements Dao<Book, Integer> {
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String name = rs.getString("name");
-            Integer startPage = rs.getInt("startPage");
-            Integer endPage = rs.getInt("endPage");
+            String pages = rs.getString("pages");
             String deadline = rs.getString("deadline");
-            Integer currentPage = rs.getInt("currentPage");
-            list.add(new Book(id, name, startPage, endPage, deadline, currentPage));
+            
+            list.add(new Book(id, name, pages, deadline));
         }
 
         rs.close();
@@ -82,32 +79,14 @@ public class ReadingListDao implements Dao<Book, Integer> {
         return list;
     }
     
-    public List<Integer> findAllStartPage() throws SQLException {
+    public List<String> findAllPages() throws SQLException {
         Connection conn = db.getConnection();
-        List<Integer> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         
-        ResultSet rs = conn.prepareStatement("SELECT startpage FROM Book").executeQuery();
+        ResultSet rs = conn.prepareStatement("SELECT pages FROM Book").executeQuery();
         
          while (rs.next()) {
-            int sd = rs.getInt("startpage");
-            list.add(sd);
-        }
-        
-        rs.close();
-        conn.close();
-        
-        return list;
-        
-    }
-    
-    public List<Integer> findAllEndPage() throws SQLException {
-        Connection conn = db.getConnection();
-        List<Integer> list = new ArrayList<>();
-        
-        ResultSet rs = conn.prepareStatement("SELECT endpage FROM Book").executeQuery();
-        
-         while (rs.next()) {
-            int sd = rs.getInt("endpage");
+            String sd = rs.getString("pages");
             list.add(sd);
         }
         
@@ -140,14 +119,13 @@ public class ReadingListDao implements Dao<Book, Integer> {
         Connection conn = db.getConnection();
         
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Book"
-                + " (name, startPage, endPage, deadline, currentPage)"
-                + " VALUES (?, ?, ?, ?, ?)");
+                + " (name, pages, deadline)"
+                + " VALUES (?, ?, ?)");
         
         stmt.setString(1, book.getName());
-        stmt.setInt(2, book.getStartPage());
-        stmt.setInt(3, book.getEndPage());
-        stmt.setString(4, book.getDeadline());
-        stmt.setInt(5, book.getCurrentPage());
+        stmt.setString(2, book.getPages());
+        stmt.setString(3, book.getDeadline());
+        
         
         stmt.executeUpdate();
         stmt.close();
@@ -155,20 +133,17 @@ public class ReadingListDao implements Dao<Book, Integer> {
     }
     
     public void update(Book book) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public void updateCurrentPage(Book book, Integer page) throws SQLException {
         Connection conn = db.getConnection();
         
         PreparedStatement stmt = conn.prepareStatement("UPDATE Book SET"
-                + " startpage = ? WHERE id = ?");
+                + " name = ?, pages = ?, deadline = ? WHERE id = ?");
         
-        stmt.setInt(1, page);
-        stmt.setInt(2, book.getId());
+        stmt.setString(1, book.getName());
+        stmt.setString(2, book.getPages());
+        stmt.setString(3, book.getDeadline());
+        stmt.setInt(4, book.getId());
         
         stmt.executeUpdate();
-        
         stmt.close();
         conn.close();
     }
