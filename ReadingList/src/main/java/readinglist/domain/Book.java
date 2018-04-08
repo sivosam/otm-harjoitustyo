@@ -62,7 +62,9 @@ public class Book {
         this.currentPage = currentPage;
     }
     
-    
-
+    @Override
+    public String toString() {
+        return this.name;
+    }
     
 }

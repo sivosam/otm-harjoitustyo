@@ -45,7 +45,7 @@ public class ReadingListDao implements Dao<Book, Integer> {
     @Override
     public List<Book> findAll() throws SQLException {
         Connection conn = db.getConnection();
-        List<Book> list = new ArrayList<Book>();
+        List<Book> list = new ArrayList<>();
 
         ResultSet rs = conn.prepareStatement("SELECT * FROM Book").executeQuery();
 
@@ -63,6 +63,59 @@ public class ReadingListDao implements Dao<Book, Integer> {
         conn.close();
 
         return list;
+    }
+    
+    public List<String> findAllDeadline() throws SQLException {
+        Connection conn = db.getConnection();
+        List<String> list = new ArrayList<>();
+        
+        ResultSet rs = conn.prepareStatement("SELECT deadline FROM Book").executeQuery();
+        
+        while (rs.next()) {
+            String dl = rs.getString("deadline");
+            list.add(dl);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return list;
+    }
+    
+    public List<Integer> findAllStartPage() throws SQLException {
+        Connection conn = db.getConnection();
+        List<Integer> list = new ArrayList<>();
+        
+        ResultSet rs = conn.prepareStatement("SELECT startpage FROM Book").executeQuery();
+        
+         while (rs.next()) {
+            int sd = rs.getInt("startpage");
+            list.add(sd);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return list;
+        
+    }
+    
+    public List<Integer> findAllEndPage() throws SQLException {
+        Connection conn = db.getConnection();
+        List<Integer> list = new ArrayList<>();
+        
+        ResultSet rs = conn.prepareStatement("SELECT endpage FROM Book").executeQuery();
+        
+         while (rs.next()) {
+            int sd = rs.getInt("endpage");
+            list.add(sd);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return list;
+        
     }
 
     @Override
@@ -109,7 +162,7 @@ public class ReadingListDao implements Dao<Book, Integer> {
         Connection conn = db.getConnection();
         
         PreparedStatement stmt = conn.prepareStatement("UPDATE Book SET"
-                + " currentPage = ? WHERE id = ?");
+                + " startpage = ? WHERE id = ?");
         
         stmt.setInt(1, page);
         stmt.setInt(2, book.getId());
