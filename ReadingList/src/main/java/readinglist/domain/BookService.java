@@ -1,6 +1,7 @@
 package readinglist.domain;
 
 import java.sql.*;
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +12,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.VBox;
 import readinglist.database.Database;
@@ -31,11 +33,11 @@ public class BookService {
     private VBox deleteButtons;
 
     public BookService() throws SQLException {
-        
+
         database = new Database();
         rdd = new ReadingListDao(database);
         deleteButtons = new VBox();
-        
+
         //Testaamista varten
         
         deleteButtons.getChildren().clear();
@@ -44,7 +46,6 @@ public class BookService {
         }
         
         //^
-
         bookList = FXCollections.observableList(rdd.findAll());
         nameList = FXCollections.observableList(rdd.findAllNames());
         pagesList = FXCollections.observableList(rdd.findAllPages());
@@ -52,12 +53,13 @@ public class BookService {
         nameListView = new ListView(nameList);
         pagesListView = new ListView(pagesList);
         deadlineListView = new ListView(deadlineList);
-        
-        
+
+        //Sommittelu
+        deleteButtons.setPadding(new Insets(0, 0, 0, 3));
 
         //NAMES ListView
         nameListView.setMinWidth(200);
-        nameListView.setPrefWidth(520);
+        nameListView.setPrefWidth(620);
 
         nameListView.setEditable(true);
 
@@ -92,23 +94,29 @@ public class BookService {
         pagesListView.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
             @Override
             public void handle(ListView.EditEvent<String> t) {
-                pagesListView.getItems().set(t.getIndex(), t.getNewValue());
 
-                int i = t.getIndex();
+                if (t.getNewValue().trim().matches("\\d{1,4} - \\d{1,4}")) {
+                    pagesListView.getItems().set(t.getIndex(), t.getNewValue().trim());
 
-                Book b = (Book) bookList.get(i);
+                    int i = t.getIndex();
 
-                try {
-                    b.setPages(t.getNewValue());
-                    rdd.update(b);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ReadingListUi.class.getName()).log(Level.SEVERE, null, ex);
+                    Book b = (Book) bookList.get(i);
+
+                    try {
+                        b.setPages(t.getNewValue());
+                        rdd.update(b);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ReadingListUi.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+
                 }
+
             }
         });
 
         //DEADLINE ListView
-        deadlineListView.setPrefWidth(150);
+        deadlineListView.setPrefWidth(100);
         deadlineListView.setMinWidth(100);
 
         deadlineListView.setEditable(true);
@@ -118,19 +126,30 @@ public class BookService {
         deadlineListView.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
             @Override
             public void handle(ListView.EditEvent<String> t) {
-                deadlineListView.getItems().set(t.getIndex(), t.getNewValue());
 
-                int i = t.getIndex();
+                if (t.getNewValue().trim().matches("\\d{2}.\\d{2}") | t.getNewValue().trim().matches("\\d{2}.\\d{2}.\\d{4}")) {
+                    
+                    String date = t.getNewValue().trim();
+                    
+                    if (!(date.matches("\\d{2}.\\d{2}.\\d{4}"))) {
+                        date = t.getNewValue().concat("." + Calendar.getInstance().get(Calendar.YEAR));
+                    }
+                    
+                    deadlineListView.getItems().set(t.getIndex(), date);
 
-                Book b = (Book) bookList.get(i);
+                    int i = t.getIndex();
 
-                try {
-                    b.setDeadline(t.getNewValue());
-                    rdd.update(b);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ReadingListUi.class.getName()).log(Level.SEVERE, null, ex);
+                    Book b = (Book) bookList.get(i);
 
+                    try {
+                        b.setDeadline(date);
+                        rdd.update(b);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ReadingListUi.class.getName()).log(Level.SEVERE, null, ex);
+
+                    }
                 }
+
             }
         });
 
@@ -146,7 +165,7 @@ public class BookService {
         Button dbt = new Button("X");
         dbt.setMinHeight(25);
         dbt.setMaxHeight(25);
-        
+
         dbt.setOnAction((e) -> {
 
             try {
@@ -158,33 +177,33 @@ public class BookService {
         });
         return dbt;
     }
-    
+
     public void redrawListView() throws SQLException {
         nameListView.getItems().clear();
         pagesListView.getItems().clear();
         deadlineListView.getItems().clear();
         deleteButtons.getChildren().clear();
-        
+
         nameList = FXCollections.observableList(rdd.findAllNames());
         pagesList = FXCollections.observableList(rdd.findAllPages());
         deadlineList = FXCollections.observableList(rdd.findAllDeadline());
-        
+
         nameList.forEach(n -> {
             nameListView.getItems().add(n);
         });
-        
+
         pagesList.forEach(p -> {
             pagesListView.getItems().add(p);
         });
-        
+
         deadlineList.forEach(d -> {
             deadlineListView.getItems().add(d);
         });
-        
+
         rdd.findAll().forEach(b -> {
             deleteButtons.getChildren().add(createDeleteButton(b));
         });
-        
+
     }
 
     public ListView<String> getNameListView() {

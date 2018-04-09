@@ -5,3 +5,4 @@
 | 8.4. | 4 | Ulkoasua viilattu, lisätty toiminnallisuus kirjojen poistamiselle, alustava toiminnallisuus sivujen muokkaamiselle|
 | 8.4. | 2 | Ulkoasun viilausta, parannettu poistotoimintaa, sivujen muokkaaminen viimeistelty|
 | 9.4. | 2 | Refaktorointia, poistotoiminta valmis|
+| 9.4. | 2 | Sivujen ja deadlinejen muokkaaminen rajoitettu oikeisiin muotoihin, sommittelua|

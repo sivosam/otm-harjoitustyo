@@ -34,11 +34,12 @@ import readinglist.domain.BookService;
 
 public class ReadingListUi extends Application {
 
-    /* ONGELMAT:
+    /* TODO:
     
-    1.  Sivujen muokkaaminen: pitää jotenkin napata kirjan id, jotta voidaan db päivittää. DONE
-    2.  Kirjojen lisääminen ja poistaminen: lista päivittyy vasta kun ohjelma käynnistetään uudelleen. Joku refresh tarvitaan tms. poistaminen DONE
-    3.  Muokkaamisen sommittelu, ehkä kokonaan pois ja poistonapit vaan listan viereen – nimet ja sivut jne. voi muokata suoraan listasta DONE
+    1.  Lisää -sarakkeen refaktorointi
+    2.  Otsikoiden ankkuroiminen
+    3.  Otsikoiden fontit uusiks
+
     
      */
     public static void main(String[] args) {
@@ -62,7 +63,7 @@ public class ReadingListUi extends Application {
         HBox readinglistBox = new HBox();
         VBox deleteButtons = new VBox();
 
-        readinglistBox.setPrefHeight(400);
+        readinglistBox.setPrefHeight(500);
 
         uusiBox.setPadding(new Insets(10));
         center.setPadding(new Insets(10));
@@ -87,14 +88,14 @@ public class ReadingListUi extends Application {
         lukulistaTitle.setFont(new Font("Arial", 30));
         lukulistaTitle.getStyleClass().add("title");
         lukulistaTitle.setPadding(new Insets(5, 0, 0, 10));
-        lukulistaTitle.setPrefWidth(500);
+        lukulistaTitle.setPrefWidth(620);
 
         //Sarake "Sivut"
         Label sivutTitle = new Label("Sivut");
         sivutTitle.setFont(new Font("Arial", 30));
         sivutTitle.getStyleClass().add("title");
         sivutTitle.setPadding(new Insets(5, 0, 0, 10));
-        sivutTitle.setPrefWidth(200);
+        sivutTitle.setPrefWidth(100);
         sivutTitle.setMinWidth(100);
 
         //Sarake "Deadline"
@@ -115,11 +116,11 @@ public class ReadingListUi extends Application {
         HBox pagesFields = new HBox();
         pagesFields.setSpacing(2);
 
-        Label name = new Label("Nimi:");
+        //Label name = new Label("Nimi:");
         TextField namefield = new TextField();
         namefield.setPromptText("Nimi");
 
-        Label pages = new Label("Sivut:");
+        //Label pages = new Label("Sivut:");
         TextField spField = new TextField();
         TextField epField = new TextField();
         Label pgd = new Label("-");
@@ -128,7 +129,7 @@ public class ReadingListUi extends Application {
         epField.setPromptText("Loppusivu");
         epField.focusedProperty();
 
-        Label dl = new Label("Deadline:");
+        //Label dl = new Label("Deadline:");
         TextField dlField = new TextField();
         dlField.setPromptText("Deadline");
 
@@ -143,13 +144,7 @@ public class ReadingListUi extends Application {
 
             try {
                 rdd.save(b);
-                
-//                nameList.add(b.getName());
-//                nameListView.refresh();
-//                pagesList.add(b.getPages());
-//                pagesListView.refresh();
-//                deadlineList.add(b.getDeadline());
-//                deadlineListView.refresh();
+                bs.redrawListView();
                 
             } catch (SQLException ex) {
                 Logger.getLogger(ReadingListUi.class.getName()).log(Level.SEVERE, null, ex);
@@ -158,7 +153,7 @@ public class ReadingListUi extends Application {
 
         pagesFields.getChildren().addAll(spField, pgd, epField);
         uusiFields.setSpacing(10);
-        uusiFields.getChildren().addAll(name, namefield, pages, pagesFields, dl, dlField, uusiButton);
+        uusiFields.getChildren().addAll(namefield, pagesFields, dlField, uusiButton);
 
 
 
@@ -172,14 +167,17 @@ public class ReadingListUi extends Application {
 
         ScrollPane scroll = new ScrollPane(readinglistBox);
         scroll.setFitToWidth(true);
-
+        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        
         center.setCenter(scroll);
 
         Scene scene = new Scene(setting);
         scene.getStylesheets().add("kuosi.css");
 
         stage.setScene(scene);
+        stage.setHeight(700);
         stage.setWidth(1100);
+        stage.setResizable(false);
         stage.setTitle("Lukulista");
         stage.show();
 
