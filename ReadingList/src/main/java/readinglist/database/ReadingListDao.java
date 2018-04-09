@@ -96,6 +96,24 @@ public class ReadingListDao implements Dao<Book, Integer> {
         return list;
         
     }
+    
+    public List<String> findAllNames() throws SQLException {
+        Connection conn = db.getConnection();
+        List<String> list = new ArrayList<>();
+        
+        ResultSet rs = conn.prepareStatement("SELECT name FROM Book").executeQuery();
+        
+         while (rs.next()) {
+            String sd = rs.getString("name");
+            list.add(sd);
+        }
+        
+        rs.close();
+        conn.close();
+        
+        return list;
+        
+    }
 
     @Override
     public void delete(Integer key) throws SQLException {

@@ -30,14 +30,15 @@ import javafx.stage.Stage;
 import readinglist.database.Database;
 import readinglist.database.ReadingListDao;
 import readinglist.domain.Book;
+import readinglist.domain.BookService;
 
 public class ReadingListUi extends Application {
 
     /* ONGELMAT:
     
-    1.  Sivujen muokkaaminen: pitää jotenkin napata kirjan id, jotta voidaan db päivittää.
-    2.  Kirjojen lisääminen ja poistaminen: lista päivittyy vasta kun ohjelma käynnistetään uudelleen. Joku refresh tarvitaan tms.
-    3.  Muokkaamisen sommittelu, ehkä kokonaan pois ja poistonapit vaan listan viereen – nimet ja sivut jne. voi muokata suoraan listasta
+    1.  Sivujen muokkaaminen: pitää jotenkin napata kirjan id, jotta voidaan db päivittää. DONE
+    2.  Kirjojen lisääminen ja poistaminen: lista päivittyy vasta kun ohjelma käynnistetään uudelleen. Joku refresh tarvitaan tms. poistaminen DONE
+    3.  Muokkaamisen sommittelu, ehkä kokonaan pois ja poistonapit vaan listan viereen – nimet ja sivut jne. voi muokata suoraan listasta DONE
     
      */
     public static void main(String[] args) {
@@ -49,6 +50,8 @@ public class ReadingListUi extends Application {
 
         Database database = new Database();
         ReadingListDao rdd = new ReadingListDao(database);
+        
+        BookService bs = new BookService();
 
         GridPane setting = new GridPane();
 
@@ -58,12 +61,12 @@ public class ReadingListUi extends Application {
         HBox titlebar = new HBox();
         HBox readinglistBox = new HBox();
         VBox deleteButtons = new VBox();
-        
-        readinglistBox.setPrefHeight(300);
+
+        readinglistBox.setPrefHeight(400);
 
         uusiBox.setPadding(new Insets(10));
         center.setPadding(new Insets(10));
-        
+
         deleteButtons.setMinWidth(27);
         deleteButtons.setMaxWidth(27);
 
@@ -86,21 +89,6 @@ public class ReadingListUi extends Application {
         lukulistaTitle.setPadding(new Insets(5, 0, 0, 10));
         lukulistaTitle.setPrefWidth(500);
 
-        ObservableList<Book> namelist = FXCollections.observableList(rdd.findAll());
-
-        ListView namesListView = new ListView(namelist);
-        namesListView.setPrefWidth(520);
-
-//        namesListView.setEditable(true);
-//
-//        namesListView.setCellFactory(TextFieldListCell.forListView());
-//        namesListView.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
-//            @Override
-//            public void handle(ListView.EditEvent<String> t) {
-//                namesListView.getItems().set(t.getIndex(), t.getNewValue());
-//            }
-//        });
-
         //Sarake "Sivut"
         Label sivutTitle = new Label("Sivut");
         sivutTitle.setFont(new Font("Arial", 30));
@@ -109,35 +97,6 @@ public class ReadingListUi extends Application {
         sivutTitle.setPrefWidth(200);
         sivutTitle.setMinWidth(100);
 
-
-        List<String> pagesList = rdd.findAllPages();
-
-        ObservableList sl = FXCollections.observableList(pagesList);
-        ListView pagesListView = new ListView(sl);
-        pagesListView.setMinWidth(100);
-        
-        pagesListView.setEditable(true);
-
-        pagesListView.setCellFactory(TextFieldListCell.forListView());
-
-        pagesListView.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
-            @Override
-            public void handle(ListView.EditEvent<String> t) {
-                pagesListView.getItems().set(t.getIndex(), t.getNewValue());
-
-                int i = t.getIndex();
-
-                Book b = (Book) namesListView.getItems().get(i);
-
-                try {
-                    b.setPages(t.getNewValue());
-                    rdd.update(b);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ReadingListUi.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-
         //Sarake "Deadline"
         Label deadlineTitle = new Label("Deadline");
         deadlineTitle.setFont(new Font("Arial", 30));
@@ -145,11 +104,6 @@ public class ReadingListUi extends Application {
         deadlineTitle.setPadding(new Insets(5, 0, 0, 10));
         deadlineTitle.setPrefWidth(200);
         deadlineTitle.setMinWidth(100);
-
-        ObservableList dll = FXCollections.observableList(rdd.findAllDeadline());
-        ListView deadlineListView = new ListView(dll);
-        deadlineListView.setPrefWidth(150);
-        deadlineListView.setMinWidth(100);
 
         // Sarake "Uusi"
         Label uusiTitle = new Label("Uusi");
@@ -189,45 +143,37 @@ public class ReadingListUi extends Application {
 
             try {
                 rdd.save(b);
+                
+//                nameList.add(b.getName());
+//                nameListView.refresh();
+//                pagesList.add(b.getPages());
+//                pagesListView.refresh();
+//                deadlineList.add(b.getDeadline());
+//                deadlineListView.refresh();
+                
             } catch (SQLException ex) {
                 Logger.getLogger(ReadingListUi.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
+
         pagesFields.getChildren().addAll(spField, pgd, epField);
         uusiFields.setSpacing(10);
         uusiFields.getChildren().addAll(name, namefield, pages, pagesFields, dl, dlField, uusiButton);
-        
-        // Sarake poisto-napeille
-        rdd.findAll().stream().forEach(b -> {
-            Button dbt = new Button("X");
-            dbt.setMinHeight(25);
-            dbt.setStyle(STYLESHEET_MODENA);
-            dbt.setOnAction((e) -> {
-                try {
-                    rdd.delete(b.getId());
-                } catch (SQLException ex) {
-                    Logger.getLogger(ReadingListUi.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-            deleteButtons.getChildren().add(dbt);
-        });
-        
+
+
+
         //
-        
         titlebar.getChildren().addAll(lukulistaTitle, sivutTitle, deadlineTitle);
 
         uusiBox.getChildren().addAll(uusiTitle, uusiFields);
         center.setTop(titlebar);
+        
+        readinglistBox.getChildren().addAll(bs.getNameListView(), bs.getPagesListView(), bs.getDeadlineListView(), bs.getDeleteButtons());
 
-        
-        readinglistBox.getChildren().addAll(namesListView, pagesListView, deadlineListView, deleteButtons);
-        
         ScrollPane scroll = new ScrollPane(readinglistBox);
         scroll.setFitToWidth(true);
-        
+
         center.setCenter(scroll);
-        
 
         Scene scene = new Scene(setting);
         scene.getStylesheets().add("kuosi.css");
