@@ -6,3 +6,4 @@
 | 8.4. | 2 | Ulkoasun viilausta, parannettu poistotoimintaa, sivujen muokkaaminen viimeistelty|
 | 9.4. | 2 | Refaktorointia, poistotoiminta valmis|
 | 9.4. | 2 | Sivujen ja deadlinejen muokkaaminen rajoitettu oikeisiin muotoihin, sommittelua|
+| 13.4.| 6 | Refaktorointia, sovelluslogiikka eritelty käyttöliittymästä, testejä luotu, checkstyle otettu käyttöön, virheviestejä käyttäjän vääristä syötöistä|
