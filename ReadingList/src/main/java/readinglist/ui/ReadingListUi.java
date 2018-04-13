@@ -1,15 +1,20 @@
 package readinglist.ui;
 
 import java.sql.*;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -29,20 +34,30 @@ public class ReadingListUi extends Application {
 
     /* TODO:
     
-    1.  Lisää -sarakkeen refaktorointi
-    2.  Otsikoiden ankkuroiminen
-    3.  Otsikoiden fontit uusiks
+    1.  Deadline antaa lisätä sarjoja kuten "11111111"
+    2.  
+    3.  
 
     
      */
+    BookService bs = new BookService();
+    ObservableList<Book> bookList = FXCollections.observableList(bs.getBooks());
+    ObservableList<String> nameList = FXCollections.observableList(bs.getNames());
+    ObservableList<String> pagesList = FXCollections.observableList(bs.getPages());
+    ObservableList<String> deadlineList = FXCollections.observableList(bs.getDeadlines());
+
+    ListView<String> nameListView = new ListView<>(nameList);
+    ListView<String> pagesListView = new ListView<>(pagesList);
+    ListView<String> deadlineListView = new ListView<>(deadlineList);
+
+    VBox deleteButtons = new VBox();
+
     public static void main(String[] args) {
         launch(ReadingListUi.class);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-
-        BookService bs = new BookService();
 
         GridPane setting = new GridPane();
 
@@ -52,6 +67,10 @@ public class ReadingListUi extends Application {
         HBox titlebar = new HBox();
         HBox readinglistBox = new HBox();
         ScrollPane scroll = new ScrollPane(readinglistBox);
+
+        Label errorLabel = new Label("");
+        errorLabel.getStyleClass().add("error");
+        errorLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("Gray"), CornerRadii.EMPTY, Insets.EMPTY)));
 
         center.setCenter(scroll);
         center.setTop(titlebar);
@@ -65,6 +84,9 @@ public class ReadingListUi extends Application {
         newBookBox.setPadding(new Insets(10));
         newBookBox.setSpacing(30);
 
+        deleteButtons.setPadding(new Insets(0, 0, 0, 3));
+        deleteButtons.setMinWidth(33);
+
         setting.addColumn(0, newBookBox);
         setting.addColumn(1, center);
 
@@ -72,13 +94,86 @@ public class ReadingListUi extends Application {
         Label readinglistTitle = createTitle("Lukulista");
         readinglistTitle.setPrefWidth(620);
 
+        nameListView.setMinWidth(200);
+        nameListView.setPrefWidth(620);
+
+        nameListView.setEditable(true);
+
+        nameListView.setCellFactory(TextFieldListCell.forListView());
+        nameListView.setOnEditCommit((ListView.EditEvent<String> t) -> {
+
+            int i = t.getIndex();
+
+            Book b = (Book) bookList.get(i);
+
+            String error = bs.updateBookName(b, t.getNewValue().trim());
+
+            if (error.equals("")) {
+                nameListView.getItems().set(t.getIndex(), t.getNewValue().trim());
+                errorLabel.setText("");
+            } else {
+                errorLabel.setText(error);
+            }
+
+        });
+
         //Sarake "Sivut"
         Label pagesTitle = createTitle("Sivut");
         pagesTitle.setMinWidth(100);
 
+        pagesListView.setMinWidth(100);
+        pagesListView.setMaxWidth(100);
+
+        pagesListView.setEditable(true);
+
+        pagesListView.setCellFactory(TextFieldListCell.forListView());
+
+        pagesListView.setOnEditCommit((ListView.EditEvent<String> t) -> {
+
+            int i = t.getIndex();
+            Book b = (Book) bookList.get(i);
+
+            String error = bs.updateBookPages(b, t.getNewValue().trim());
+
+            if (error.equals("")) {
+                pagesListView.getItems().set(t.getIndex(), t.getNewValue().trim());
+                errorLabel.setText("");
+            } else {
+                errorLabel.setText(error);
+            }
+        });
+
         //Sarake "Deadline"
         Label deadlineTitle = createTitle("Deadline");
         deadlineTitle.setMinWidth(140);
+
+        deadlineListView.setPrefWidth(100);
+        deadlineListView.setMinWidth(100);
+
+        deadlineListView.setEditable(true);
+
+        deadlineListView.setCellFactory(TextFieldListCell.forListView());
+
+        deadlineListView.setOnEditCommit((ListView.EditEvent<String> t) -> {
+
+            int i = t.getIndex();
+            Book b = (Book) bookList.get(i);
+
+            String error = bs.updateBookDeadline(b, t.getNewValue());
+
+            if (error.equals("")) {
+                deadlineListView.getItems().set(t.getIndex(), t.getNewValue().trim());
+                errorLabel.setText("");
+            } else {
+                errorLabel.setText(error);
+            }
+
+        });
+
+        //Poistonapit
+        bs.getBooks().forEach(b -> {
+            deleteButtons.getChildren().add(createDeleteButton(b));
+        });
 
         // Sarake "Uusi"
         Label addBookTitle = createTitle("Uusi");
@@ -101,35 +196,24 @@ public class ReadingListUi extends Application {
 
         Button addBookButton = new Button();
         addBookButton.setText("Lisää");
-        Label errorLabel = new Label("");
 
         addBookButton.setOnAction((e) -> {
 
-//            Book b = new Book(null, namefield.getText(),
-//                    spField.getText() + " - " + epField.getText(),
-//                    dlField.getText());
-            try {
-                String error = bs.saveBook(namefield.getText(),
-                        spField.getText(), epField.getText(),
-                        dlField.getText());
+            String error = bs.saveBook(namefield.getText(),
+                    spField.getText(), epField.getText(),
+                    dlField.getText());
 
-                if (error.equals("")) {
-                    bs.redrawListView();
+            if (error.equals("")) {
+                redrawListView();
 
-                    namefield.clear();
-                    spField.clear();
-                    epField.clear();
-                    dlField.clear();
+                namefield.clear();
+                spField.clear();
+                epField.clear();
+                dlField.clear();
 
-                    errorLabel.setText("");
-                } else {
-                    errorLabel.setText(error);
-                    errorLabel.getStyleClass().add("error");
-                    errorLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("Gray"), CornerRadii.EMPTY, Insets.EMPTY)));
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ReadingListUi.class.getName()).log(Level.SEVERE, null, ex);
+                errorLabel.setText("");
+            } else {
+                errorLabel.setText(error);
             }
         });
 
@@ -137,10 +221,9 @@ public class ReadingListUi extends Application {
         uusiFields.setSpacing(10);
         uusiFields.getChildren().addAll(namefield, pagesFields, dlField, addBookButton);
 
-        //
         titlebar.getChildren().addAll(readinglistTitle, pagesTitle, deadlineTitle);
         newBookBox.getChildren().addAll(addBookTitle, uusiFields, errorLabel);
-        readinglistBox.getChildren().addAll(bs.getNameListView(), bs.getPagesListView(), bs.getDeadlineListView(), bs.getDeleteButtons());
+        readinglistBox.getChildren().addAll(nameListView, pagesListView, deadlineListView, deleteButtons);
 
         Scene scene = new Scene(setting);
         scene.getStylesheets().add("kuosi.css");
@@ -161,6 +244,51 @@ public class ReadingListUi extends Application {
         l.setPadding(new Insets(5, 0, 0, 10));
 
         return l;
+    }
+
+    public Button createDeleteButton(Book book) {
+
+        Button dbt = new Button("X");
+        dbt.setMinHeight(25);
+        dbt.setMaxHeight(25);
+
+        dbt.setOnAction((e) -> {
+
+            bs.deleteBook(book);
+            redrawListView();
+
+        });
+        return dbt;
+    }
+
+    public void redrawListView() {
+        nameListView.getItems().clear();
+        pagesListView.getItems().clear();
+        deadlineListView.getItems().clear();
+        deleteButtons.getChildren().clear();
+        bookList.clear();
+
+        nameList = FXCollections.observableList(bs.getNames());
+        pagesList = FXCollections.observableList(bs.getPages());
+        deadlineList = FXCollections.observableList(bs.getDeadlines());
+        bookList = FXCollections.observableList(bs.getBooks());
+
+        nameList.forEach(n -> {
+            nameListView.getItems().add(n);
+        });
+
+        pagesList.forEach(p -> {
+            pagesListView.getItems().add(p);
+        });
+
+        deadlineList.forEach(d -> {
+            deadlineListView.getItems().add(d);
+        });
+
+        bs.getBooks().forEach(b -> {
+            deleteButtons.getChildren().add(createDeleteButton(b));
+        });
+
     }
 
 }
