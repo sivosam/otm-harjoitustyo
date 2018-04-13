@@ -6,11 +6,15 @@
 }
 
 .root {
-     -fx-background-image: url("t5.png");
+    -fx-background-image: url("t5.png");
 }
 
 .title.label .text {
     -fx-fill: white;
     -fx-stroke: black;
     -fx-stroke-width: 1px;
+}
+
+.error.label .text {
+    -fx-fill: white;
 }

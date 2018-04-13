@@ -1,30 +1,23 @@
 package readinglist.ui;
 
-import java.io.File;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import readinglist.database.Database;
@@ -49,103 +42,92 @@ public class ReadingListUi extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Database database = new Database();
-        ReadingListDao rdd = new ReadingListDao(database);
-        
         BookService bs = new BookService();
 
         GridPane setting = new GridPane();
 
-        VBox uusiBox = new VBox();
+        VBox newBookBox = new VBox();
 
         BorderPane center = new BorderPane();
         HBox titlebar = new HBox();
         HBox readinglistBox = new HBox();
-        VBox deleteButtons = new VBox();
+        ScrollPane scroll = new ScrollPane(readinglistBox);
+
+        center.setCenter(scroll);
+        center.setTop(titlebar);
+        center.setPadding(new Insets(10));
+
+        scroll.setFitToWidth(true);
+        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         readinglistBox.setPrefHeight(500);
 
-        uusiBox.setPadding(new Insets(10));
-        center.setPadding(new Insets(10));
+        newBookBox.setPadding(new Insets(10));
+        newBookBox.setSpacing(30);
 
-        deleteButtons.setMinWidth(27);
-        deleteButtons.setMaxWidth(27);
-
-        uusiBox.setSpacing(30);
-
-        setting.addColumn(0, uusiBox);
+        setting.addColumn(0, newBookBox);
         setting.addColumn(1, center);
 
-        ColumnConstraints c1 = new ColumnConstraints();
-        c1.setPercentWidth(25);
-        ColumnConstraints c2 = new ColumnConstraints();
-        c2.setPercentWidth(75);
-
-        setting.getColumnConstraints().addAll(c1, c2);
-
         //Sarake "Lukulista"
-        Label lukulistaTitle = new Label("Lukulista");
-        lukulistaTitle.setFont(new Font("Arial", 30));
-        lukulistaTitle.getStyleClass().add("title");
-        lukulistaTitle.setPadding(new Insets(5, 0, 0, 10));
-        lukulistaTitle.setPrefWidth(620);
+        Label readinglistTitle = createTitle("Lukulista");
+        readinglistTitle.setPrefWidth(620);
 
         //Sarake "Sivut"
-        Label sivutTitle = new Label("Sivut");
-        sivutTitle.setFont(new Font("Arial", 30));
-        sivutTitle.getStyleClass().add("title");
-        sivutTitle.setPadding(new Insets(5, 0, 0, 10));
-        sivutTitle.setPrefWidth(100);
-        sivutTitle.setMinWidth(100);
+        Label pagesTitle = createTitle("Sivut");
+        pagesTitle.setMinWidth(100);
 
         //Sarake "Deadline"
-        Label deadlineTitle = new Label("Deadline");
-        deadlineTitle.setFont(new Font("Arial", 30));
-        deadlineTitle.getStyleClass().add("title");
-        deadlineTitle.setPadding(new Insets(5, 0, 0, 10));
-        deadlineTitle.setPrefWidth(200);
-        deadlineTitle.setMinWidth(100);
+        Label deadlineTitle = createTitle("Deadline");
+        deadlineTitle.setMinWidth(140);
 
         // Sarake "Uusi"
-        Label uusiTitle = new Label("Uusi");
-        uusiTitle.setFont(new Font("Arial", 30));
-        uusiTitle.getStyleClass().add("title");
-        uusiTitle.setPadding(new Insets(5, 0, 0, 10));
+        Label addBookTitle = createTitle("Uusi");
 
         VBox uusiFields = new VBox();
         HBox pagesFields = new HBox();
         pagesFields.setSpacing(2);
-
-        //Label name = new Label("Nimi:");
         TextField namefield = new TextField();
         namefield.setPromptText("Nimi");
 
-        //Label pages = new Label("Sivut:");
         TextField spField = new TextField();
         TextField epField = new TextField();
         Label pgd = new Label("-");
         pgd.setFont(new Font("Arial", 20));
         spField.setPromptText("Alkusivu");
         epField.setPromptText("Loppusivu");
-        epField.focusedProperty();
 
-        //Label dl = new Label("Deadline:");
         TextField dlField = new TextField();
         dlField.setPromptText("Deadline");
 
-        Button uusiButton = new Button();
-        uusiButton.setText("Lisää");
+        Button addBookButton = new Button();
+        addBookButton.setText("Lisää");
+        Label errorLabel = new Label("");
 
-        uusiButton.setOnAction((e) -> {
+        addBookButton.setOnAction((e) -> {
 
-            Book b = new Book(null, namefield.getText(),
-                    spField.getText() + " - " + epField.getText(),
-                    dlField.getText());
-
+//            Book b = new Book(null, namefield.getText(),
+//                    spField.getText() + " - " + epField.getText(),
+//                    dlField.getText());
             try {
-                rdd.save(b);
-                bs.redrawListView();
-                
+                String error = bs.saveBook(namefield.getText(),
+                        spField.getText(), epField.getText(),
+                        dlField.getText());
+
+                if (error.equals("")) {
+                    bs.redrawListView();
+
+                    namefield.clear();
+                    spField.clear();
+                    epField.clear();
+                    dlField.clear();
+
+                    errorLabel.setText("");
+                } else {
+                    errorLabel.setText(error);
+                    errorLabel.getStyleClass().add("error");
+                    errorLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("Gray"), CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+
             } catch (SQLException ex) {
                 Logger.getLogger(ReadingListUi.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -153,23 +135,12 @@ public class ReadingListUi extends Application {
 
         pagesFields.getChildren().addAll(spField, pgd, epField);
         uusiFields.setSpacing(10);
-        uusiFields.getChildren().addAll(namefield, pagesFields, dlField, uusiButton);
-
-
+        uusiFields.getChildren().addAll(namefield, pagesFields, dlField, addBookButton);
 
         //
-        titlebar.getChildren().addAll(lukulistaTitle, sivutTitle, deadlineTitle);
-
-        uusiBox.getChildren().addAll(uusiTitle, uusiFields);
-        center.setTop(titlebar);
-        
+        titlebar.getChildren().addAll(readinglistTitle, pagesTitle, deadlineTitle);
+        newBookBox.getChildren().addAll(addBookTitle, uusiFields, errorLabel);
         readinglistBox.getChildren().addAll(bs.getNameListView(), bs.getPagesListView(), bs.getDeadlineListView(), bs.getDeleteButtons());
-
-        ScrollPane scroll = new ScrollPane(readinglistBox);
-        scroll.setFitToWidth(true);
-        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        
-        center.setCenter(scroll);
 
         Scene scene = new Scene(setting);
         scene.getStylesheets().add("kuosi.css");
@@ -181,6 +152,15 @@ public class ReadingListUi extends Application {
         stage.setTitle("Lukulista");
         stage.show();
 
+    }
+
+    public Label createTitle(String text) {
+        Label l = new Label(text);
+        l.setFont(new Font("Arial", 30));
+        l.getStyleClass().add("title");
+        l.setPadding(new Insets(5, 0, 0, 10));
+
+        return l;
     }
 
 }

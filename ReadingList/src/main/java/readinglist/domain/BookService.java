@@ -39,12 +39,11 @@ public class BookService {
         deleteButtons = new VBox();
 
         //Testaamista varten
-        
         deleteButtons.getChildren().clear();
         for (int s = 0; s < 5; s++) {
             rdd.save(new Book(null, "" + s, "" + s + s, "" + s + s + s));
         }
-        
+
         //^
         bookList = FXCollections.observableList(rdd.findAll());
         nameList = FXCollections.observableList(rdd.findAllNames());
@@ -56,6 +55,7 @@ public class BookService {
 
         //Sommittelu
         deleteButtons.setPadding(new Insets(0, 0, 0, 3));
+        deleteButtons.setMinWidth(33);
 
         //NAMES ListView
         nameListView.setMinWidth(200);
@@ -127,14 +127,14 @@ public class BookService {
             @Override
             public void handle(ListView.EditEvent<String> t) {
 
-                if (t.getNewValue().trim().matches("\\d{2}.\\d{2}") | t.getNewValue().trim().matches("\\d{2}.\\d{2}.\\d{4}")) {
-                    
+                if (t.getNewValue().trim().matches("\\d{1,2}.\\d{1,2}") | t.getNewValue().trim().matches("\\d{1,2}.\\d{1,2}.\\d{2,4}")) {
+
                     String date = t.getNewValue().trim();
-                    
-                    if (!(date.matches("\\d{2}.\\d{2}.\\d{4}"))) {
+
+                    if (!(date.matches("\\d{1,2}.\\d{1,2}.\\d{2,4}"))) {
                         date = t.getNewValue().concat("." + Calendar.getInstance().get(Calendar.YEAR));
                     }
-                    
+
                     deadlineListView.getItems().set(t.getIndex(), date);
 
                     int i = t.getIndex();
@@ -204,6 +204,44 @@ public class BookService {
             deleteButtons.getChildren().add(createDeleteButton(b));
         });
 
+    }
+//    
+//    public void saveBook(Book book) throws SQLException {
+//        rdd.save(book);
+//    }
+//    
+
+    public String saveBook(String name, String startpage, String endpage, String deadline) throws SQLException {
+
+        String error = "";
+
+        if (name.trim().equals("")) {
+            error = "Nimi ei saa olla tyhjä.\n";
+        }
+        
+        if (!startpage.trim().matches("\\d{1,4}")) {
+            error = error.concat("Alkusivun pitää olla 1-4 numeroinen luku.\n");
+        }
+
+        if (!endpage.trim().matches("\\d{1,4}")) {
+            error = error.concat("Loppusivun pitää olla 1-4 numeroinen luku.\n");
+        }
+
+        if (!deadline.trim().matches("\\d{1,2}.\\d{1,2}") && !deadline.trim().matches("\\d{1,2}.\\d{1,2}.\\d{2,4}")) {
+            error = error.concat("Deadlinen pitää olla muodossa x.y \ntai x.y.xxxx.\n");
+
+            if (deadline.trim().matches("\\d{1,2}.\\d{1,2}")) {
+                deadline = deadline.concat("." + Calendar.getInstance().get(Calendar.YEAR));
+            }
+        }
+
+        if (error.equals("")) {
+            Book b = new Book(null, name, startpage + " - " + endpage, deadline);
+
+            rdd.save(b);
+        }
+
+        return error;
     }
 
     public ListView<String> getNameListView() {
