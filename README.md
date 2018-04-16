@@ -2,7 +2,7 @@
 
 Tämä on *kurssin* **Ohjelmistotekniikan menetelmät** harjoitustyö. 
 
-Kyseessä on ohjelma, jonka avulla on helppo pitää kirjaa luettavista kirjoista, artikkeleista jne., sekä niiden sivumääristä ja deadlineistä. 
+Kyseessä on ohjelma, jonka avulla on helppo pitää kirjaa luettavista kirjoista, artikkeleista jne., sekä niiden sivumääristä ja takarajoista. 
 
 ## Dokumentaatio
 
