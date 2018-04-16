@@ -159,14 +159,15 @@ public class ReadingListDao implements Dao<Book, Integer> {
         conn.close();
     }
 
+    //Testaamista varten
     public void deleteAll() throws SQLException {
         Connection conn = db.getConnection();
-        
+
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM Book");
         stmt.executeUpdate();
-        
+
         stmt.close();
         conn.close();
     }
-    
+
 }

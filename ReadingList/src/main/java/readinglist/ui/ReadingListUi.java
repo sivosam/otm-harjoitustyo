@@ -1,9 +1,6 @@
 package readinglist.ui;
 
-import java.sql.*;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,8 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import readinglist.database.Database;
-import readinglist.database.ReadingListDao;
 import readinglist.domain.Book;
 import readinglist.domain.BookService;
 
@@ -34,9 +29,9 @@ public class ReadingListUi extends Application {
 
     /* TODO:
     
-    1.  Deadline antaa lisätä sarjoja kuten "11111111"
-    2.  
-    3.  
+    1.  Deadline antaa lisätä sarjoja kuten "11111111" DONE
+    2.  Embedded database DONE
+    3.  Listan sortteeraaminen päivän jne. mukaan
 
     
      */
@@ -109,7 +104,7 @@ public class ReadingListUi extends Application {
             String error = bs.updateBookName(b, t.getNewValue().trim());
 
             if (error.equals("")) {
-                nameListView.getItems().set(t.getIndex(), t.getNewValue().trim());
+                nameListView.getItems().set(i, t.getNewValue().trim());
                 errorLabel.setText("");
             } else {
                 errorLabel.setText(error);
@@ -136,7 +131,7 @@ public class ReadingListUi extends Application {
             String error = bs.updateBookPages(b, t.getNewValue().trim());
 
             if (error.equals("")) {
-                pagesListView.getItems().set(t.getIndex(), t.getNewValue().trim());
+                pagesListView.getItems().set(i, t.getNewValue().trim());
                 errorLabel.setText("");
             } else {
                 errorLabel.setText(error);
@@ -158,11 +153,15 @@ public class ReadingListUi extends Application {
 
             int i = t.getIndex();
             Book b = (Book) bookList.get(i);
+            String date = t.getNewValue().trim();
 
-            String error = bs.updateBookDeadline(b, t.getNewValue());
+            String error = bs.updateBookDeadline(b, date);
 
             if (error.equals("")) {
-                deadlineListView.getItems().set(t.getIndex(), t.getNewValue().trim());
+                if (date.matches("\\d{2,4}\\.\\d{2,4}")) {
+                    date = date.concat("." + Calendar.getInstance().get(Calendar.YEAR));
+                }
+                deadlineListView.getItems().set(i, date);
                 errorLabel.setText("");
             } else {
                 errorLabel.setText(error);

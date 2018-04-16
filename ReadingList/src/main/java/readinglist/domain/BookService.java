@@ -5,8 +5,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import readinglist.database.Database;
 import readinglist.database.ReadingListDao;
 
@@ -16,7 +14,12 @@ public class BookService {
     private ReadingListDao rdd;
 
     public BookService() {
-        database = new Database(new File("db", "readinglist.db"));
+        database = new Database();
+        rdd = new ReadingListDao(database);
+    }
+
+    public BookService(String file) {
+        database = new Database(new File("db", file));
         rdd = new ReadingListDao(database);
     }
 
@@ -29,19 +32,19 @@ public class BookService {
         }
 
         if (!startpage.trim().matches("\\d{1,4}")) {
-            error = error.concat("Alkusivun pitää olla 1-4 numeroinen luku.\n");
+            error = error.concat("Alkusivun täytyy olla 1-4 numeroinen luku.\n");
         }
 
         if (!endpage.trim().matches("\\d{1,4}")) {
-            error = error.concat("Loppusivun pitää olla 1-4 numeroinen luku.\n");
+            error = error.concat("Loppusivun täytyy olla 1-4 numeroinen luku.\n");
         }
 
-        if (!deadline.trim().matches("\\d{1,2}.\\d{1,2}") && !deadline.trim().matches("\\d{1,2}.\\d{1,2}.\\d{2,4}")) {
-            error = error.concat("Deadlinen pitää olla muodossa x.y \ntai x.y.xxxx.\n");
+        if (!deadline.trim().matches("\\d{1,2}\\.\\d{1,2}") && !deadline.trim().matches("\\d{1,2}\\.\\d{1,2}\\.\\d{2,4}")) {
+            error = error.concat("Deadlinen täytyy olla muodossa x.y \ntai x.y.xxxx.\n");
+        }
 
-            if (deadline.trim().matches("\\d{1,2}.\\d{1,2}")) {
-                deadline = deadline.concat("." + Calendar.getInstance().get(Calendar.YEAR));
-            }
+        if (deadline.trim().matches("\\d{1,2}\\.\\d{1,2}")) {
+            deadline = deadline.concat("." + Calendar.getInstance().get(Calendar.YEAR));
         }
 
         if (error.equals("")) {
@@ -50,7 +53,7 @@ public class BookService {
             try {
                 rdd.save(b);
             } catch (SQLException ex) {
-                Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
         }
 
@@ -61,7 +64,7 @@ public class BookService {
         try {
             rdd.delete(book.getId());
         } catch (SQLException ex) {
-            Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
     }
 
@@ -69,7 +72,7 @@ public class BookService {
         try {
             rdd.update(book);
         } catch (SQLException ex) {
-            Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
     }
 
@@ -84,7 +87,7 @@ public class BookService {
                 book.setName(name);
                 rdd.update(book);
             } catch (SQLException ex) {
-                Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
         }
         return error;
@@ -99,7 +102,7 @@ public class BookService {
                 book.setPages(pages);
                 rdd.update(book);
             } catch (SQLException ex) {
-                Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
         } else {
             error = "Sivujen täytyy olla muodossa x - y";
@@ -111,19 +114,17 @@ public class BookService {
 
         String error = "";
 
-        String date = deadline.trim();
+        if (deadline.matches("\\d{1,2}\\.\\d{1,2}") || deadline.matches("\\d{1,2}\\.\\d{1,2}\\.\\d{2,4}")) {
 
-        if (date.matches("\\d{1,2}.\\d{1,2}") | date.matches("\\d{1,2}.\\d{1,2}.\\d{2,4}")) {
-
-            if (!(date.matches("\\d{1,2}.\\d{1,2}.\\d{2,4}"))) {
-                date = date.concat("." + Calendar.getInstance().get(Calendar.YEAR));
+            if (!(deadline.matches("\\d{1,2}\\.\\d{1,2}\\.\\d{2,4}"))) {
+                deadline = deadline.concat("." + Calendar.getInstance().get(Calendar.YEAR));
             }
 
             try {
-                book.setDeadline(date);
+                book.setDeadline(deadline);
                 rdd.update(book);
             } catch (SQLException ex) {
-                Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
         } else {
             error = "Deadlinen täytyy olla muodossa x.y \ntai x.y.xx tai x.y.xxxx";
@@ -139,8 +140,7 @@ public class BookService {
             l = rdd.findAllNames();
 
         } catch (SQLException ex) {
-            Logger.getLogger(BookService.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
 
         return l;
@@ -153,8 +153,7 @@ public class BookService {
             l = rdd.findAllPages();
 
         } catch (SQLException ex) {
-            Logger.getLogger(BookService.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
 
         return l;
@@ -167,8 +166,7 @@ public class BookService {
             l = rdd.findAllDeadline();
 
         } catch (SQLException ex) {
-            Logger.getLogger(BookService.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
 
         return l;
@@ -181,11 +179,19 @@ public class BookService {
             l = rdd.findAll();
 
         } catch (SQLException ex) {
-            Logger.getLogger(BookService.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
 
         return l;
+    }
+
+    //Testaamista varten
+    public void deleteAllBooks() {
+        try {
+            rdd.deleteAll();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 
 }
