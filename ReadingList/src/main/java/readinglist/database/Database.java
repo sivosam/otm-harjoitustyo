@@ -57,17 +57,17 @@ public class Database {
                 PreparedStatement prep = conn.prepareStatement("INSERT INTO Book"
                         + " (name, pages, deadline)"
                         + " VALUES (?, ?, ?)");
-                
+
                 prep.setString(1, "John M. Taurek 1977. Should the Numbers Count?");
                 prep.setString(2, "293 - 316");
                 prep.setString(3, "5.5.2018");
                 prep.executeUpdate();
-                
+
                 prep.setString(1, "Jeff McMahan 2006. The Ethics of Killing in War");
                 prep.setString(2, "23 - 41");
                 prep.setString(3, "15.5.2018");
                 prep.executeUpdate();
-                
+
                 prep.setString(1, "Harry Potter and the Prisoner of Azkaban");
                 prep.setString(2, "1 - 317");
                 prep.setString(3, "25.10.2018");
@@ -82,7 +82,7 @@ public class Database {
                 prep.close();
                 stmt2.close();
             }
-            
+
             stmt.close();
 
         }
