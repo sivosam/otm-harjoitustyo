@@ -12,6 +12,9 @@ Kyseessä on ohjelma, jonka avulla on helppo pitää kirjaa luettavista kirjoist
 
 [Arkkitehtuuri](https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/arkkitehtuuri.md)
 
+## Releaset
+
+[Viikko 5](https://github.com/sivosam/otm-harjoitustyo/releases/tag/viikko5)
 
 ## Komentorivitoiminnot
 
