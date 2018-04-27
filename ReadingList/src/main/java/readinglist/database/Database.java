@@ -3,6 +3,10 @@ package readinglist.database;
 import java.io.File;
 import java.sql.*;
 
+/**
+ * Luokka, jonka avulla otetaan yhteys tietokantatiedostoon.
+ *
+ */
 public class Database {
 
     private static File file1;
@@ -10,14 +14,29 @@ public class Database {
     private static Boolean hasData = false;
     private static Connection conn;
 
+    /**
+     * Konstruktorin ollessa tyhjä käytetään oletustietokantatiedostoa.
+     *
+     */
     public Database() {
     }
 
+    /**
+     * Tarvittaessa konstruktori on parametrillinen, jos
+     * oletustietokantatiedostoa haluta käyttää.
+     *
+     * @param file polku haluttuun tietokantatiedostoon
+     */
     public Database(File file) {
         file1 = file;
         test = true;
     }
 
+    /**
+     * Metodi, jonka avulla voidaan luoda yhteys tietokantatiedostoon.
+     * Automaattisesti käyttää konstruktorissa määriteltyä tiedostoa tai
+     * oletustiedostoa konstruktorin ollessa parametriton.
+     */
     public static Connection getConnection() throws SQLException {
 
         if (test) {
@@ -36,6 +55,13 @@ public class Database {
         return conn;
     }
 
+    /**
+     * Metodi, joka lisää muutaman esimerkkitekstin lukulistalle. 
+     *
+     * Metodi on toteutettu siten, että esimerkkitekstit lisätään vain, jos tietokantataulua "Book" ei ole olemassa.
+     * Tällöin metodi luo taulun ja lisää esimerkkitekstit. Tulevilla käynnistyskerroilla tekstejä ei siis lisätä, ellei tietokantatiedostoa poisteta.
+     * 
+     */
     private static void init() throws SQLException {
 
         if (!hasData) {

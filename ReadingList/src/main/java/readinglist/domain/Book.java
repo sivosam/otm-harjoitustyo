@@ -2,6 +2,11 @@ package readinglist.domain;
 
 import java.util.Objects;
 
+/**
+ * Yksittäistä kirjaa tai muuta tekstiä kuvaava luokka
+ *
+ *
+ */
 public class Book {
 
     private Integer id;
@@ -9,6 +14,17 @@ public class Book {
     private String pages;
     private String deadline;
 
+    /**
+     * Luokan konstruktori
+     *
+     * @param id Tietokannan käyttämä pääavain. Jos arvo on null, asettaa
+     * tietokanta sen automaattisesti.
+     * @param name Kirjan tai tekstin nimi
+     * @param pages Vaadittu sivumäärä, muodossa xx - yy
+     * @param deadline Päivämäärä, jolloin teksti tulee olla luettuna. Muodossa
+     * pp.kk.vv/vvvv
+     *
+     */
     public Book(Integer id, String name, String pages, String deadline) {
         this.id = id;
         this.name = name;
@@ -35,7 +51,7 @@ public class Book {
     public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
-    
+
     @Override
     public String toString() {
         return this.name;
@@ -49,7 +65,6 @@ public class Book {
         this.pages = pages;
     }
 
-    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -67,5 +82,5 @@ public class Book {
         }
         return true;
     }
-    
+
 }

@@ -8,21 +8,51 @@ import java.util.List;
 import readinglist.database.Database;
 import readinglist.database.ReadingListDao;
 
+/**
+ * Luokka lukulistan sovelluslogiikalle. Tarjoaa toiminnallisuuden mm. tekstien
+ * lisäämiseen ja muokkaamiseen. Luokka tallentaa muutokset konstruktorissa
+ * määriteltyyn tietokantaan luokkaa ReadingListDao käyttäen.
+ *
+ */
 public class BookService {
 
     private Database database;
     private ReadingListDao rdd;
 
+    /**
+     * Konstruktori voidaan suorittaa parametrittomana, jolloin se asettaa
+     * tietokannaksi readinglist.db.
+     *
+     */
     public BookService() {
         database = new Database();
         rdd = new ReadingListDao(database);
     }
 
+    /**
+     * Tämän parametrillisen konstruktorin avulla voidaan asettaa haluttu
+     * tietokanta.
+     *
+     * @param file polku haluttuun tietokantatiedostoon
+     *
+     */
     public BookService(String file) {
         database = new Database(new File("db", file));
         rdd = new ReadingListDao(database);
     }
 
+    /**
+     * Metodi uuden tekstin tallentamista varten.
+     *
+     * @param name Tekstin nimi
+     * @param startpage Teksin aloitussivu
+     * @param endpage Tekstin viimeinen sivu
+     * @param deadline Päivämäärä, jolloin tekstin tulee olla luettuna
+     *
+     * @return Tyhjän String:in, jos teksti tallennettiin onnistuneesti. Muutoin
+     * palauttaa virheviestin String:inä.
+     *
+     */
     public String saveBook(String name, String startpage, String endpage, String deadline) {
 
         String error = "";
@@ -60,6 +90,11 @@ public class BookService {
         return error;
     }
 
+    /**
+     * Metodi tekstin poistamista varten.
+     *
+     * @param book Poistettava kirja
+     */
     public void deleteBook(Book book) {
         try {
             rdd.delete(book.getId());
@@ -68,14 +103,23 @@ public class BookService {
         }
     }
 
-    public void updateBook(Book book) {
-        try {
-            rdd.update(book);
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-    }
-
+//    public void updateBook(Book book) {
+//        try {
+//            rdd.update(book);
+//        } catch (SQLException ex) {
+//            System.out.println(ex);
+//        }
+//    }
+    /**
+     * Metodi tekstin nimen muokkaamista varten.
+     *
+     * @param book Muokattava teksti
+     * @param name Uusi nimi
+     *
+     * @return Tyhjän String:in, jos nimi muokattiin onnistuneesti. Muutoin
+     * palauttaa virheviestin String:inä.
+     *
+     */
     public String updateBookName(Book book, String name) {
 
         String error = "";
@@ -93,6 +137,16 @@ public class BookService {
         return error;
     }
 
+    /**
+     * Metodi tekstin sivumäärän muokkaamista varten.
+     *
+     * @param book Muokattava teksti
+     * @param pages Uusi sivumäärä muodossa xx - yy
+     *
+     * @return Tyhjän String:in, jos sivumäärä muokattiin onnistuneesti. Muutoin
+     * palauttaa virheviestin String:inä.
+     *
+     */
     public String updateBookPages(Book book, String pages) {
 
         String error = "";
@@ -110,6 +164,16 @@ public class BookService {
         return error;
     }
 
+    /**
+     * Metodi tekstin deadlinen muokkaamista varten.
+     *
+     * @param book Muokattava teksti
+     * @param deadline Uusi deadline
+     *
+     * @return Tyhjän String:in, jos deadline muokattiin onnistuneesti. Muutoin
+     * palauttaa virheviestin String:inä.
+     *
+     */
     public String updateBookDeadline(Book book, String deadline) {
 
         String error = "";

@@ -5,10 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import readinglist.domain.Book;
 
+    /**
+     * Luokka tietokannan kanssa keskusteluun.
+     * Konstruktori vaatii parametrina sopivan Database-olion.
+     * 
+     */
+
 public class ReadingListDao implements Dao<Book, Integer> {
 
     private Database db;
 
+    /**
+     * Luokan konstruktori
+     *
+     * @param database Database-olio, jonka kautta yhdistetään itse
+     * tietokantatiedostoon
+     *
+     */
     public ReadingListDao(Database database) {
         this.db = database;
     }

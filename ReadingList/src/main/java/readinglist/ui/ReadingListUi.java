@@ -31,8 +31,7 @@ public class ReadingListUi extends Application {
     
     1.  Deadline antaa lisätä sarjoja kuten "11111111" DONE
     2.  Embedded database DONE
-    3.  Listan sortteeraaminen päivän jne. mukaan
-
+    3. 
     
      */
     BookService bs = new BookService();
@@ -185,8 +184,8 @@ public class ReadingListUi extends Application {
 
         TextField spField = new TextField();
         TextField epField = new TextField();
-        Label pgd = new Label("-");
-        pgd.setFont(new Font("Arial", 20));
+        Label pagesDash = new Label("-");
+        pagesDash.setFont(new Font("Arial", 20));
         spField.setPromptText("Alkusivu");
         epField.setPromptText("Loppusivu");
 
@@ -216,7 +215,7 @@ public class ReadingListUi extends Application {
             }
         });
 
-        pagesFields.getChildren().addAll(spField, pgd, epField);
+        pagesFields.getChildren().addAll(spField, pagesDash, epField);
         uusiFields.setSpacing(10);
         uusiFields.getChildren().addAll(namefield, pagesFields, dlField, addBookButton);
 
@@ -235,7 +234,7 @@ public class ReadingListUi extends Application {
         stage.show();
 
     }
-
+    
     public Label createTitle(String text) {
         Label l = new Label(text);
         l.setFont(new Font("Arial", 30));
@@ -259,7 +258,11 @@ public class ReadingListUi extends Application {
         });
         return dbt;
     }
-
+    
+   /**
+     * Metodi lukulistan alkioiden päivittämistä varten.
+     *
+     */
     public void redrawListView() {
         nameListView.getItems().clear();
         pagesListView.getItems().clear();
