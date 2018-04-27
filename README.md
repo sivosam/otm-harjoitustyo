@@ -44,6 +44,18 @@ mvn package
 
 generoi hakemistoon _target_ suoritettavan jar-tiedoston _ReadingList-1.0-SNAPSHOT.jar_. Ensimmäisellä käynnistyskerralla luo samaan hakemistoon tiedoston readinglist.db.
 
+### JavaDoc
+
+JavaDoc generoidaan komennolla
+
+```
+mvn javadoc:javadoc
+```
+
+JavaDocia voi tarkastella avaamalla selaimella tiedosto target/site/apidocs/index.html
+
+
+
 ### Checkstyle
 
 Tiedostoon [checkstyle.xml](https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/checkstyle.xml) määrittelemät tarkistukset suoritetaan komennolla
