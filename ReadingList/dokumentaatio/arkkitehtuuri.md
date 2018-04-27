@@ -32,7 +32,7 @@ Teksin nimeä, sivumäärää, sekä deadlinea voi muokata tuplaklikkaamalla hal
 
 Sovelluslogiikasta vastaava luokka _BookService_ tarjoaa toiminnallisuuden tekstien lisäämiseen, muokkaamiseen ja poistamiseen. Havaitessaan virhesyötön, palauttaa luokka virheviestin käyttöliittymälle, eikä tallenna lisättyä/muokattua tekstiä. 
 
-Esimerkiksi sivumäärän tulee olla muodossa xx - yy. Käyttäjän muokattaessa olemassaolevan tekstin sivumäärää virheellisesti, palauttaa BookServicen metodi _updateBookPages()_ virheviestin "Sivujen täytyy olla muodossa x - y". 
+Esimerkiksi sivumäärän tulee olla muodossa x - y. Käyttäjän muokattaessa olemassaolevan tekstin sivumäärää virheellisesti, palauttaa BookServicen metodi _updateBookPages()_ virheviestin "Sivujen täytyy olla muodossa x - y". 
 
 Muita luokan tarjoamia metodeita ovat mm. 
 - _saveBook()_
@@ -54,7 +54,7 @@ Luokka _Database_ joko luo oletustietokantatiedoston _readinglist.db_ hakemistoo
 
 ### Tietokanta
 
-Sovellus siis luo käynnistyshakemistoon tietokannan nimeltä _readinglist.db_. Tietokannassa on yksi taulu, jonka schema on seuraavanlainen:
+Sovellus luo käynnistyshakemistoon tietokannan nimeltä _readinglist.db_. Tietokannassa on yksi taulu, jonka schema on seuraavanlainen:
 
 ```
 CREATE TABLE Book (
@@ -76,7 +76,7 @@ Virheettömää tekstiä lisätessä ja painamalla nappia _addBookButton_ etenee
 
 <img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/uuden%20kirjan%20sekvenssikaavio.png" width="750">
 
-Käyttöliittymän nappi siis kutsuu luokan _BookService_ metodia _saveBook()_. _BookService_ luo uuden Book-olion ja kutsuu _ReadingListDao_:n metodia _save_. Kaiken onnistuessa ongelmitta _BookService_ palauttaa käyttöliittymälle tyhjän String:in, joka tarkoittaa, ettei virheitä esiintynyt. Tämän jälkeen käyttöliittymä kutsuu omaa metodiaan _redrawListView()_, joka listaa lukulistan alkiot uudestaan.
+Käyttöliittymän nappi siis kutsuu luokan _BookService_ metodia _saveBook()_. _BookService_ luo uuden Book-olion ja kutsuu _ReadingListDao_:n metodia _save()_. Kaiken onnistuessa ongelmitta _BookService_ palauttaa käyttöliittymälle tyhjän String:in, joka tarkoittaa, ettei virheitä esiintynyt. Tämän jälkeen käyttöliittymä kutsuu omaa metodiaan _redrawListView()_, joka listaa lukulistan alkiot uudestaan.
 
 ## Ohjelman rakenteeseen jääneet heikkoudet
 
