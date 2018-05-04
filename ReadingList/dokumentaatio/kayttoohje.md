@@ -14,7 +14,7 @@ Ohjelma tarvittaessa luo tietokantatiedoston _readinglist.db_ ja käynnistyy ikk
 
 Ensimmäisellä käynnistyskerralla ohjelma asettaa muutaman esimerkkitekstin listalle.
 
-<img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/kaytto1.png" width="400">am
+<img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/kaytto1.png" width="600">
 
 ## Uuden tekstin lisääminen
 
@@ -26,11 +26,11 @@ Uuden tekstin voi lisätä vasemmalta puolelta. Kaikkien kohtien tulee olla asia
 
 Kaikkia listan tekstien arvoja pystyy muokkaamaan tuplaklikkaamalla haluttua kenttää, syöttämällä uuden arvon ja painamalla enter-näppäintä.
 
-<img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/kaytto3.png" width="400">
+<img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/kaytto3.png" width="600">
 
  Tässäkin tilanteessa ohjelma ilmoittaa mahdollisista virheellisistä arvoista. 
  
- <img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/kaytto4.png" width="400">
+ <img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/kaytto4.png" width="600">
  
  ## Tekstin poistaminen
  
