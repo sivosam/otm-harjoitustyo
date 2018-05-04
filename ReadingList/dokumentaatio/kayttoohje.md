@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa itse ohjelma [ReadingList.jar](https://github.com/sivosam/otm-harjoitustyo/releases/tag/viikko6)
+Lataa ohjelma [ReadingList.jar](https://github.com/sivosam/otm-harjoitustyo/releases/tag/viikko6)
 
 ## Ohjelman käynnistys
 
