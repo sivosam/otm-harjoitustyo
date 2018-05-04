@@ -9,4 +9,5 @@
 | 13.4.| 6 | Refaktorointia, sovelluslogiikka eritelty käyttöliittymästä, testejä luotu, checkstyle otettu käyttöön, virheviestejä käyttäjän vääristä syötöistä|
 | 16.4. | 3 | Päivämäärän syöttöä korjattu, tehty ohjelmasta paketoituva, laajennettu database-luokkaa siten, että paketoitu jar luo tarvittaessa tietokannan ja esimerkkikirjoja. |
 |27.4. | 5 | JavaDoc aloitettu, arkkitehtuuridokumenttia laajennettu |
-| Yht. | 28 |
+|4.5. | 3 | Testikattavuutta laajennettu, käyttöohjeet tehty, pientä viilausta, lopullinen release |
+| Yht. | 31 |
