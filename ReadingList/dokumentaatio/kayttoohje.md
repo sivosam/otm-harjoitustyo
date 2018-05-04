@@ -1,11 +1,37 @@
-| Päivä | Aika | Mitä tehty  |
-| :----:|:-----| :-----|
-| 22.3. | 1    | Määrittelydokumentti |
-| 7.4. | 3    | Projekti aloitettu: perus käyttöliittymä ja toiminnallisuus kirjojen lisäämiseen luotu|
-| 8.4. | 4 | Ulkoasua viilattu, lisätty toiminnallisuus kirjojen poistamiselle, alustava toiminnallisuus sivujen muokkaamiselle|
-| 8.4. | 2 | Ulkoasun viilausta, parannettu poistotoimintaa, sivujen muokkaaminen viimeistelty|
-| 9.4. | 2 | Refaktorointia, poistotoiminta valmis|
-| 9.4. | 2 | Sivujen ja deadlinejen muokkaaminen rajoitettu oikeisiin muotoihin, sommittelua|
-| 13.4.| 6 | Refaktorointia, sovelluslogiikka eritelty käyttöliittymästä, testejä luotu, checkstyle otettu käyttöön, virheviestejä käyttäjän vääristä syötöistä|
-| 16.4 | 3 | Päivämäärän syöttöä korjattu, tehty ohjelmasta paketoituva, laajennettu database-luokkaa siten, että paketoitu jar luo tarvittaessa tietokannan ja esimerkkikirjoja. |
-| Yht. | 23 |
+# Käyttöohje
+
+Lataa itse ohjelma [ReadingList.jar](https://github.com/sivosam/otm-harjoitustyo/releases/tag/viikko6)
+
+## Ohjelman käynnistys
+
+Ohjelman voi käynnistää tuplaklikkaamalla tiedostoa _ReadingList.jar_ tai komennolla 
+
+```
+java -jar readinglist.jar
+```
+
+Ohjelma tarvittaessa luo tietokantatiedoston _readinglist.db_ ja käynnistyy ikkunaan, jonka vasemmalla puolella löytyy toiminnallisuus uuden tekstin lisäämiseen ja oikealla itse lukulista alkioineen ja poistonappeineen. 
+
+Ensimmäisellä käynnistyskerralla ohjelma asettaa muutaman esimerkkitekstin listalle.
+
+<img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/kaytto1.png" width="400">am
+
+## Uuden tekstin lisääminen
+
+Uuden tekstin voi lisätä vasemmalta puolelta. Kaikkien kohtien tulee olla asiallisesti täytettynä, jonka jälkeen "Lisää"- nappia painamalla teksti tallentuu tietokantaan ja näkyy listassa. Ohjelma ilmoittaa mahdollisista virheellisistä syötöistä. 
+
+<img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/kaytto2.png" width="400">
+
+## Tekstin muokkaaminen
+
+Kaikkia listan tekstien arvoja pystyy muokkaamaan tuplaklikkaamalla haluttua kenttää, syöttämällä uuden arvon ja painamalla enter-näppäintä.
+
+<img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/kaytto3.png" width="400">
+
+ Tässäkin tilanteessa ohjelma ilmoittaa mahdollisista virheellisistä arvoista. 
+ 
+ <img src="https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kuvat/kaytto4.png" width="400">
+ 
+ ## Tekstin poistaminen
+ 
+ Tekstin pystyy poistamaan listalta painamalla teksin oikealla puolella olevaa X-nappia. Tällöin tekstin poistuu näkyvistä listalta ja poistuu myös tietokannasta.
