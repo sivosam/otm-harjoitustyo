@@ -58,19 +58,19 @@ public class BookService {
         String error = "";
 
         if (name.trim().equals("")) {
-            error = " Nimi ei saa olla tyhjä.\n ";
+            error = " Nimi ei saa olla tyhjä. \n";
         }
 
         if (!startpage.trim().matches("\\d{1,4}")) {
-            error = error.concat(" Alkusivun täytyy olla 1-4 numeroinen luku.\n ");
+            error = error.concat(" Alkusivun täytyy olla 1-4 numeroinen luku. \n");
         }
 
         if (!endpage.trim().matches("\\d{1,4}")) {
-            error = error.concat(" Loppusivun täytyy olla 1-4 numeroinen luku.\n ");
+            error = error.concat(" Loppusivun täytyy olla 1-4 numeroinen \n luku. \n");
         }
 
         if (!deadline.trim().matches("\\d{1,2}\\.\\d{1,2}") && !deadline.trim().matches("\\d{1,2}\\.\\d{1,2}\\.\\d{2,4}")) {
-            error = error.concat(" Deadlinen täytyy olla muodossa x.y \n tai x.y.xxxx.\n ");
+            error = error.concat(" Deadlinen täytyy olla muodossa x.y \n tai x.y.xxxx. \n");
         }
 
         if (deadline.trim().matches("\\d{1,2}\\.\\d{1,2}")) {

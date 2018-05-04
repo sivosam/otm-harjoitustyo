@@ -60,16 +60,16 @@ public class BookServiceTest {
     @Test
     public void saveBookReturnsCorrectErrors() {
         //Nimi-virhe
-        assertEquals(" Nimi ei saa olla tyhjä.\n ", bs.saveBook("", "123", "321", "12.12.12"));
+        assertEquals(" Nimi ei saa olla tyhjä. \n", bs.saveBook("", "123", "321", "12.12.12"));
 
         //Alkusivu-virhe
-        assertEquals(" Alkusivun täytyy olla 1-4 numeroinen luku.\n ", bs.saveBook("Potter", "", "321", "12.12.12"));
+        assertEquals(" Alkusivun täytyy olla 1-4 numeroinen luku. \n", bs.saveBook("Potter", "", "321", "12.12.12"));
 
         //Loppusivu-virhe
-        assertEquals(" Loppusivun täytyy olla 1-4 numeroinen luku.\n ", bs.saveBook("Potter", "123", "11111", "12.12.12"));
+        assertEquals(" Loppusivun täytyy olla 1-4 numeroinen \n luku. \n", bs.saveBook("Potter", "123", "11111", "12.12.12"));
 
         //Deadline-virhe
-        assertEquals(" Deadlinen täytyy olla muodossa x.y \n tai x.y.xxxx.\n ", bs.saveBook("Potter", "123", "321", "123"));
+        assertEquals(" Deadlinen täytyy olla muodossa x.y \n tai x.y.xxxx. \n", bs.saveBook("Potter", "123", "321", "123"));
     }
 
     @Test
