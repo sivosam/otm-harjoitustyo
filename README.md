@@ -6,7 +6,7 @@ Kyseessä on ohjelma, jonka avulla on helppo pitää kirjaa luettavista kirjoist
 
 ## Dokumentaatio
 
-[Käyttöohjeet](https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kayttoohje.md)
+[Käyttöohje](https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/kayttoohje.md)
 
 [Vaatimusmäärittely](https://github.com/sivosam/otm-harjoitustyo/blob/master/ReadingList/dokumentaatio/vaatimusmaarittely.md)
 
