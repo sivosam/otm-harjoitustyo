@@ -9,7 +9,6 @@ import java.sql.*;
  */
 public class Database {
 
-    private static File file1;
     private static Boolean test = false;
     private static Boolean hasData = false;
     private static Connection conn;
@@ -22,25 +21,34 @@ public class Database {
     }
 
     /**
-     * Tarvittaessa konstruktori on parametrillinen, jos
-     * oletustietokantatiedostoa haluta käyttää.
+     * Parametrillinen konstruktori testaamista varten.
      *
-     * @param file polku haluttuun tietokantatiedostoon
+     * @param test Arvon ollessa true metodi getConnection() ottaa yhteyden
+     * testitietokantaan normaalin sijaan.
      */
-    public Database(File file) {
-        file1 = file;
-        test = true;
+    public Database(Boolean test) {
+        this.test = test;
     }
 
     /**
      * Metodi, jonka avulla voidaan luoda yhteys tietokantatiedostoon.
      * Automaattisesti käyttää konstruktorissa määriteltyä tiedostoa tai
      * oletustiedostoa konstruktorin ollessa parametriton.
+     *
+     * @return Palauttaa Connection-olion, jolla on yhteys tietokantatiedostoon.
+     *
      */
     public static Connection getConnection() throws SQLException {
 
         if (test) {
-            conn = DriverManager.getConnection("jdbc:sqlite:" + file1.getAbsolutePath());
+            try {
+                Class.forName("org.sqlite.JDBC");
+            } catch (ClassNotFoundException ex) {
+                System.out.println(ex);
+            }
+            conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+            init();
+
         } else {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -56,11 +64,13 @@ public class Database {
     }
 
     /**
-     * Metodi, joka lisää muutaman esimerkkitekstin lukulistalle. 
+     * Metodi, joka lisää muutaman esimerkkitekstin lukulistalle.
      *
-     * Metodi on toteutettu siten, että esimerkkitekstit lisätään vain, jos tietokantataulua "Book" ei ole olemassa.
-     * Tällöin metodi luo taulun ja lisää esimerkkitekstit. Tulevilla käynnistyskerroilla tekstejä ei siis lisätä, ellei tietokantatiedostoa poisteta.
-     * 
+     * Metodi on toteutettu siten, että esimerkkitekstit lisätään vain, jos
+     * tietokantataulua "Book" ei ole olemassa. Tällöin metodi luo taulun ja
+     * lisää esimerkkitekstit. Tulevilla käynnistyskerroilla tekstejä ei siis
+     * lisätä, ellei tietokantatiedostoa poisteta.
+     *
      */
     private static void init() throws SQLException {
 

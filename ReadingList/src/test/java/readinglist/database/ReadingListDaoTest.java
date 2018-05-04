@@ -1,12 +1,9 @@
-package readinglist.dao;
+package readinglist.database;
 
-import java.io.File;
 import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import readinglist.database.Database;
-import readinglist.database.ReadingListDao;
 import readinglist.domain.Book;
 
 public class ReadingListDaoTest {
@@ -14,10 +11,10 @@ public class ReadingListDaoTest {
     Database db;
     ReadingListDao rdd;
     Book potter;
-    
+
     @Before
     public void setUp() throws SQLException {
-        db = new Database(new File("db", "test.db"));
+        db = new Database(true);
         rdd = new ReadingListDao(db);
         rdd.deleteAll();
 
@@ -52,7 +49,7 @@ public class ReadingListDaoTest {
         rdd.save(new Book(null, "1984", "100 - 150", "12.11.2018"));
         assertEquals(2, rdd.findAllPages().size());
     }
-    
+
     @Test
     public void findAllDeadlineFindsAllDeadlines() throws SQLException {
         assertEquals("12.12.2018", rdd.findAllDeadline().get(0));
@@ -60,27 +57,25 @@ public class ReadingListDaoTest {
         rdd.save(new Book(null, "1984", "100 - 150", "12.11.2018"));
         assertEquals(2, rdd.findAllDeadline().size());
     }
-    
+
     @Test
     public void updateUpdatesBook() throws SQLException {
         Book b = rdd.findOne(1);
         b.setName("Valtio");
         rdd.update(b);
-        
+
         assertEquals("Valtio", rdd.findOne(1).getName());
     }
-    
+
     @Test
     public void findOneFindsOne() throws SQLException {
         assertEquals(potter.getName(), rdd.findOne(1).getName());
     }
-    
+
     @Test
     public void findOneFindsNoneIfEmpty() throws SQLException {
         rdd.deleteAll();
         assertEquals(null, rdd.findOne(1));
     }
-        
-    
-    
+
 }

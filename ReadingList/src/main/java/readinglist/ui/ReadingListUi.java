@@ -27,13 +27,6 @@ import readinglist.domain.BookService;
 
 public class ReadingListUi extends Application {
 
-    /* TODO:
-    
-    1.  Deadline antaa lisätä sarjoja kuten "11111111" DONE
-    2.  Embedded database DONE
-    3. 
-    
-     */
     BookService bs = new BookService();
     ObservableList<Book> bookList = FXCollections.observableList(bs.getBooks());
     ObservableList<String> nameList = FXCollections.observableList(bs.getNames());
@@ -234,7 +227,8 @@ public class ReadingListUi extends Application {
         stage.show();
 
     }
-    
+
+    // Simppeli metodi toiston vähentämiseksi, joka luo ja palauttaa uuden otsikon. 
     public Label createTitle(String text) {
         Label l = new Label(text);
         l.setFont(new Font("Arial", 30));
@@ -244,6 +238,15 @@ public class ReadingListUi extends Application {
         return l;
     }
 
+    /**
+     * Metodi lukulistan alkioiden poistonappien luomista varten.
+     *
+     * @param book teksti, jota varten nappi luodaan
+     *
+     * @return Palauttaa oikein sommitellun napin, jossa valmiina
+     * toiminnallisuus poistoa varten.
+     *
+     */
     public Button createDeleteButton(Book book) {
 
         Button dbt = new Button("X");
@@ -258,8 +261,8 @@ public class ReadingListUi extends Application {
         });
         return dbt;
     }
-    
-   /**
+
+    /**
      * Metodi lukulistan alkioiden päivittämistä varten.
      *
      */

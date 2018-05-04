@@ -1,6 +1,5 @@
 package readinglist.domain;
 
-import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,14 +29,15 @@ public class BookService {
     }
 
     /**
-     * Tämän parametrillisen konstruktorin avulla voidaan asettaa haluttu
-     * tietokanta.
+     * Tämän parametrillisen konstruktorin avulla voidaan luokkaa testata
+     * testitietokannan avulla.
      *
-     * @param file polku haluttuun tietokantatiedostoon
+     * @param test Arvon ollessa true käytetään normaalin tietokannan sijasta
+     * testitietokantaa.
      *
      */
-    public BookService(String file) {
-        database = new Database(new File("db", file));
+    public BookService(Boolean test) {
+        database = new Database(test);
         rdd = new ReadingListDao(database);
     }
 
