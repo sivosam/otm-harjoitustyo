@@ -20,6 +20,8 @@ Kyseessä on ohjelma, jonka avulla on helppo pitää kirjaa luettavista kirjoist
 
 [Viikko 6](https://github.com/sivosam/otm-harjoitustyo/releases/tag/viikko6)
 
+[Viikko 7 - Lopullinen](https://github.com/sivosam/otm-harjoitustyo/releases/tag/viikko7)
+
 ## Komentorivitoiminnot
 
 ### Testaus
